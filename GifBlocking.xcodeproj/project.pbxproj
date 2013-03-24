@@ -16,6 +16,10 @@
 		61364BC216FF3241002374FC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 61364BC116FF3241002374FC /* Default.png */; };
 		61364BC416FF3241002374FC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61364BC316FF3241002374FC /* Default@2x.png */; };
 		61364BC616FF3241002374FC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61364BC516FF3241002374FC /* Default-568h@2x.png */; };
+		61364BCD16FF329E002374FC /* mbImw.gif in Resources */ = {isa = PBXBuildFile; fileRef = 61364BCC16FF329E002374FC /* mbImw.gif */; };
+		61364BD016FF32B6002374FC /* UIImageView+NDVAnimatedGIFSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 61364BCF16FF32B6002374FC /* UIImageView+NDVAnimatedGIFSupport.m */; };
+		61364BD216FF332A002374FC /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61364BD116FF332A002374FC /* ImageIO.framework */; };
+		61364BD416FF3334002374FC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61364BD316FF3334002374FC /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,11 @@
 		61364BC116FF3241002374FC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		61364BC316FF3241002374FC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		61364BC516FF3241002374FC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		61364BCC16FF329E002374FC /* mbImw.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = mbImw.gif; sourceTree = "<group>"; };
+		61364BCE16FF32B6002374FC /* UIImageView+NDVAnimatedGIFSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+NDVAnimatedGIFSupport.h"; sourceTree = "<group>"; };
+		61364BCF16FF32B6002374FC /* UIImageView+NDVAnimatedGIFSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+NDVAnimatedGIFSupport.m"; sourceTree = "<group>"; };
+		61364BD116FF332A002374FC /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		61364BD316FF3334002374FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +48,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61364BD416FF3334002374FC /* QuartzCore.framework in Frameworks */,
+				61364BD216FF332A002374FC /* ImageIO.framework in Frameworks */,
 				61364BB016FF3241002374FC /* UIKit.framework in Frameworks */,
 				61364BB216FF3241002374FC /* Foundation.framework in Frameworks */,
 				61364BB416FF3241002374FC /* CoreGraphics.framework in Frameworks */,
@@ -68,6 +79,8 @@
 		61364BAE16FF3241002374FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				61364BD116FF332A002374FC /* ImageIO.framework */,
+				61364BD316FF3334002374FC /* QuartzCore.framework */,
 				61364BAF16FF3241002374FC /* UIKit.framework */,
 				61364BB116FF3241002374FC /* Foundation.framework */,
 				61364BB316FF3241002374FC /* CoreGraphics.framework */,
@@ -78,6 +91,8 @@
 		61364BB516FF3241002374FC /* GifBlocking */ = {
 			isa = PBXGroup;
 			children = (
+				61364BCE16FF32B6002374FC /* UIImageView+NDVAnimatedGIFSupport.h */,
+				61364BCF16FF32B6002374FC /* UIImageView+NDVAnimatedGIFSupport.m */,
 				61364BBE16FF3241002374FC /* AMAppDelegate.h */,
 				61364BBF16FF3241002374FC /* AMAppDelegate.m */,
 				61364BB616FF3241002374FC /* Supporting Files */,
@@ -88,6 +103,7 @@
 		61364BB616FF3241002374FC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				61364BCC16FF329E002374FC /* mbImw.gif */,
 				61364BB716FF3241002374FC /* GifBlocking-Info.plist */,
 				61364BB816FF3241002374FC /* InfoPlist.strings */,
 				61364BBB16FF3241002374FC /* main.m */,
@@ -155,6 +171,7 @@
 				61364BC216FF3241002374FC /* Default.png in Resources */,
 				61364BC416FF3241002374FC /* Default@2x.png in Resources */,
 				61364BC616FF3241002374FC /* Default-568h@2x.png in Resources */,
+				61364BCD16FF329E002374FC /* mbImw.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +184,7 @@
 			files = (
 				61364BBC16FF3241002374FC /* main.m in Sources */,
 				61364BC016FF3241002374FC /* AMAppDelegate.m in Sources */,
+				61364BD016FF32B6002374FC /* UIImageView+NDVAnimatedGIFSupport.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

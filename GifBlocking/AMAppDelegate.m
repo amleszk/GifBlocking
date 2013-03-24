@@ -1,12 +1,10 @@
-//
-//  AMAppDelegate.m
-//  GifBlocking
-//
-//  Created by al on 25/03/13.
-//  Copyright (c) 2013 amleszk. All rights reserved.
-//
 
 #import "AMAppDelegate.h"
+#import "UIImageView+NDVAnimatedGIFSupport.h"
+
+@interface AMAppDelegate ()
+@property (strong, nonatomic) UIImageView *imageView;
+@end
 
 @implementation AMAppDelegate
 
@@ -16,7 +14,31 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    NSTimer *timer =
+    [NSTimer timerWithTimeInterval:0.2
+                            target:self
+                          selector:@selector(updateTimerFireMethod:)
+                          userInfo:nil
+                           repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    
+
+    //[NSThread detachNewThreadSelector:@selector(decodeGif) toTarget:self withObject:nil];
+    [self performSelector:@selector(decodeGif) withObject:nil afterDelay:1.];
     return YES;
+}
+
+-(void) updateTimerFireMethod:(NSTimer*)timer
+{
+    NSLog(@"Timer fired");
+}
+
+-(void) decodeGif
+{
+    NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mbImw" ofType:@"gif"]];
+    _imageView = [[UIImageView alloc] ndv_initWithAnimatedGIFData:gifData];
+    [self.window addSubview:_imageView];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
