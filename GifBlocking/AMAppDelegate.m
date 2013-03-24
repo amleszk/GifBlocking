@@ -1,6 +1,7 @@
 
 #import "AMAppDelegate.h"
 #import "UIImageView+NDVAnimatedGIFSupport.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface AMAppDelegate ()
 @property (strong, nonatomic) UIImageView *imageView;
@@ -24,8 +25,20 @@
     [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
     
 
-    //[NSThread detachNewThreadSelector:@selector(decodeGif) toTarget:self withObject:nil];
-    [self performSelector:@selector(decodeGif) withObject:nil afterDelay:1.];
+    //does not block main thread, but does UI work on separate thread
+    [NSThread detachNewThreadSelector:@selector(decodeAndDisplayGif) toTarget:self withObject:nil];
+    
+    //blocks main thread, UI work on main thread
+    //[self performSelector:@selector(decodeAndDisplayGif) withObject:nil afterDelay:1.];
+    
+    //does not block main thread but again ui work should be on main thread
+//    dispatch_queue_t dataProcessQueue = dispatch_queue_create("data process queue", NULL);
+//    dispatch_async(dataProcessQueue, ^{
+//        [self decodeGif];
+//        [self displayGif];
+//    });
+    
+    
     return YES;
 }
 
@@ -34,10 +47,17 @@
     NSLog(@"Timer fired");
 }
 
--(void) decodeGif
-{
+-(void) decodeAndDisplayGif {
+    [self decodeGif];
+    [self displayGif];
+}
+
+-(void) decodeGif {
     NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mbImw" ofType:@"gif"]];
     _imageView = [[UIImageView alloc] ndv_initWithAnimatedGIFData:gifData];
+}
+
+-(void) displayGif {
     [self.window addSubview:_imageView];
 }
 
