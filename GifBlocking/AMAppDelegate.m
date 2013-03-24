@@ -1,11 +1,10 @@
 
 #import "AMAppDelegate.h"
-#import "UIImageView+NDVAnimatedGIFSupport.h"
 #import "UIImage+JTImageDecode.h"
-#import <QuartzCore/QuartzCore.h>
 
 @interface AMAppDelegate ()
 @property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIActivityIndicatorView *activity;
 @end
 
 @implementation AMAppDelegate
@@ -33,6 +32,13 @@
     //[self performSelector:@selector(decodeAndDisplayGif) withObject:nil afterDelay:1.];
     
     //does not block main thread but again ui work should be on main thread
+    
+    self.window.backgroundColor = [UIColor darkGrayColor];
+    _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _activity.center = CGPointMake(floorf(self.window.bounds.size.width/2), floorf(self.window.bounds.size.height/2));
+    [self.window addSubview:_activity];
+    [_activity startAnimating];
+    
     dispatch_queue_t dataProcessQueue = dispatch_queue_create("data process queue", NULL);
     dispatch_async(dataProcessQueue, ^{
         NSLog(@"-----------Started decode ----------");
@@ -41,6 +47,7 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"-----------Started display ----------");
             [self displayGif];
+            [_activity stopAnimating];
             NSLog(@"-----------Ended display ----------");
         });
         
@@ -58,6 +65,7 @@
 -(void) decodeAndDisplayGif {
     [self decodeGif];
     [self displayGif];
+    
 }
 
 -(void) decodeGif {
