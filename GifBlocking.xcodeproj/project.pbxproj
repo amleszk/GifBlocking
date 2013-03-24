@@ -1,0 +1,290 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		61364BB016FF3241002374FC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61364BAF16FF3241002374FC /* UIKit.framework */; };
+		61364BB216FF3241002374FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61364BB116FF3241002374FC /* Foundation.framework */; };
+		61364BB416FF3241002374FC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61364BB316FF3241002374FC /* CoreGraphics.framework */; };
+		61364BBA16FF3241002374FC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 61364BB816FF3241002374FC /* InfoPlist.strings */; };
+		61364BBC16FF3241002374FC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61364BBB16FF3241002374FC /* main.m */; };
+		61364BC016FF3241002374FC /* AMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61364BBF16FF3241002374FC /* AMAppDelegate.m */; };
+		61364BC216FF3241002374FC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 61364BC116FF3241002374FC /* Default.png */; };
+		61364BC416FF3241002374FC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61364BC316FF3241002374FC /* Default@2x.png */; };
+		61364BC616FF3241002374FC /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 61364BC516FF3241002374FC /* Default-568h@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		61364BAC16FF3241002374FC /* GifBlocking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GifBlocking.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		61364BAF16FF3241002374FC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		61364BB116FF3241002374FC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		61364BB316FF3241002374FC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		61364BB716FF3241002374FC /* GifBlocking-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GifBlocking-Info.plist"; sourceTree = "<group>"; };
+		61364BB916FF3241002374FC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		61364BBB16FF3241002374FC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		61364BBD16FF3241002374FC /* GifBlocking-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GifBlocking-Prefix.pch"; sourceTree = "<group>"; };
+		61364BBE16FF3241002374FC /* AMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AMAppDelegate.h; sourceTree = "<group>"; };
+		61364BBF16FF3241002374FC /* AMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AMAppDelegate.m; sourceTree = "<group>"; };
+		61364BC116FF3241002374FC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		61364BC316FF3241002374FC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		61364BC516FF3241002374FC /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		61364BA916FF3241002374FC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61364BB016FF3241002374FC /* UIKit.framework in Frameworks */,
+				61364BB216FF3241002374FC /* Foundation.framework in Frameworks */,
+				61364BB416FF3241002374FC /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		61364BA316FF3241002374FC = {
+			isa = PBXGroup;
+			children = (
+				61364BB516FF3241002374FC /* GifBlocking */,
+				61364BAE16FF3241002374FC /* Frameworks */,
+				61364BAD16FF3241002374FC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		61364BAD16FF3241002374FC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				61364BAC16FF3241002374FC /* GifBlocking.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		61364BAE16FF3241002374FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				61364BAF16FF3241002374FC /* UIKit.framework */,
+				61364BB116FF3241002374FC /* Foundation.framework */,
+				61364BB316FF3241002374FC /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		61364BB516FF3241002374FC /* GifBlocking */ = {
+			isa = PBXGroup;
+			children = (
+				61364BBE16FF3241002374FC /* AMAppDelegate.h */,
+				61364BBF16FF3241002374FC /* AMAppDelegate.m */,
+				61364BB616FF3241002374FC /* Supporting Files */,
+			);
+			path = GifBlocking;
+			sourceTree = "<group>";
+		};
+		61364BB616FF3241002374FC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				61364BB716FF3241002374FC /* GifBlocking-Info.plist */,
+				61364BB816FF3241002374FC /* InfoPlist.strings */,
+				61364BBB16FF3241002374FC /* main.m */,
+				61364BBD16FF3241002374FC /* GifBlocking-Prefix.pch */,
+				61364BC116FF3241002374FC /* Default.png */,
+				61364BC316FF3241002374FC /* Default@2x.png */,
+				61364BC516FF3241002374FC /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		61364BAB16FF3241002374FC /* GifBlocking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61364BC916FF3241002374FC /* Build configuration list for PBXNativeTarget "GifBlocking" */;
+			buildPhases = (
+				61364BA816FF3241002374FC /* Sources */,
+				61364BA916FF3241002374FC /* Frameworks */,
+				61364BAA16FF3241002374FC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GifBlocking;
+			productName = GifBlocking;
+			productReference = 61364BAC16FF3241002374FC /* GifBlocking.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		61364BA416FF3241002374FC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = AM;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = amleszk;
+			};
+			buildConfigurationList = 61364BA716FF3241002374FC /* Build configuration list for PBXProject "GifBlocking" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 61364BA316FF3241002374FC;
+			productRefGroup = 61364BAD16FF3241002374FC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				61364BAB16FF3241002374FC /* GifBlocking */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		61364BAA16FF3241002374FC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61364BBA16FF3241002374FC /* InfoPlist.strings in Resources */,
+				61364BC216FF3241002374FC /* Default.png in Resources */,
+				61364BC416FF3241002374FC /* Default@2x.png in Resources */,
+				61364BC616FF3241002374FC /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		61364BA816FF3241002374FC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61364BBC16FF3241002374FC /* main.m in Sources */,
+				61364BC016FF3241002374FC /* AMAppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		61364BB816FF3241002374FC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				61364BB916FF3241002374FC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		61364BC716FF3241002374FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		61364BC816FF3241002374FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		61364BCA16FF3241002374FC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GifBlocking/GifBlocking-Prefix.pch";
+				INFOPLIST_FILE = "GifBlocking/GifBlocking-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		61364BCB16FF3241002374FC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GifBlocking/GifBlocking-Prefix.pch";
+				INFOPLIST_FILE = "GifBlocking/GifBlocking-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		61364BA716FF3241002374FC /* Build configuration list for PBXProject "GifBlocking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61364BC716FF3241002374FC /* Debug */,
+				61364BC816FF3241002374FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		61364BC916FF3241002374FC /* Build configuration list for PBXNativeTarget "GifBlocking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61364BCA16FF3241002374FC /* Debug */,
+				61364BCB16FF3241002374FC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 61364BA416FF3241002374FC /* Project object */;
+}
