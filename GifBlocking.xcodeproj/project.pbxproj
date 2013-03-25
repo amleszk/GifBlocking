@@ -41,6 +41,7 @@
 		61364BD316FF3334002374FC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		61A690FF16FFB4520083CE5D /* UIImage+JTImageDecode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JTImageDecode.h"; sourceTree = "<group>"; };
 		61A6910016FFB4520083CE5D /* UIImage+JTImageDecode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JTImageDecode.m"; sourceTree = "<group>"; };
+		61A6910216FFF1EA0083CE5D /* README.markdown */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.markdown; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +112,7 @@
 				61364BC116FF3241002374FC /* Default.png */,
 				61364BC316FF3241002374FC /* Default@2x.png */,
 				61364BC516FF3241002374FC /* Default-568h@2x.png */,
+				61A6910216FFF1EA0083CE5D /* README.markdown */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
