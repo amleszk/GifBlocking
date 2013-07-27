@@ -38,6 +38,7 @@
     _activity.center = CGPointMake(floorf(self.window.bounds.size.width/2), floorf(self.window.bounds.size.height/2));
     [self.window addSubview:_activity];
     [_activity startAnimating];
+
     
     dispatch_queue_t dataProcessQueue = dispatch_queue_create("data process queue", NULL);
     dispatch_async(dataProcessQueue, ^{
@@ -57,9 +58,8 @@
     return YES;
 }
 
--(void) updateTimerFireMethod:(NSTimer*)timer
-{
-    NSLog(@"Timer fired");
+-(void) updateTimerFireMethod:(NSTimer*)timer{
+    NSLog(@".");
 }
 
 -(void) decodeAndDisplayGif {
@@ -69,13 +69,19 @@
 }
 
 -(void) decodeGif {
-    NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"mbImw" ofType:@"gif"]];
+    NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"rXYyQTo" ofType:@"gif"]];
     UIImage *gifImage = [UIImage animatedGIFImageWithData:gifData];
     _imageView = [[UIImageView alloc] initWithImage:gifImage];
 }
 
+
 -(void) displayGif {
     [self.window addSubview:_imageView];
+}
+
+- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+{
+    NSLog(@"applicationDidReceiveMemoryWarning");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

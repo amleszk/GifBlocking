@@ -37,8 +37,7 @@
 }
 
 + (UIImage *)animatedGIFImageWithData:(NSData *)data
-{
-    NSString *frameKeyPath = [NSString stringWithFormat:@"%@.%@",(NSString*)kCGImagePropertyGIFDictionary,kCGImagePropertyGIFUnclampedDelayTime];
+{    
     CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFTypeRef)data, NULL);
     size_t count = CGImageSourceGetCount(source);
     NSMutableArray *images = [NSMutableArray arrayWithCapacity:count];
@@ -53,23 +52,43 @@
         uiImage = [self decodedImageWithImage:uiImage];
         [images addObject:uiImage];
         
-        
-        CFDictionaryRef cfFrameProperties = CGImageSourceCopyPropertiesAtIndex(source,i,nil);
-        NSDictionary *frameProperties = (__bridge NSDictionary*)cfFrameProperties;
-        NSNumber *delayTimeProp = [frameProperties valueForKeyPath:frameKeyPath];
-        CFRelease(cfFrameProperties);
-        
-        CGFloat delayTime = 0.1f;
-        if(delayTimeProp)
-            delayTime = [delayTimeProp floatValue];
-        
+        CGFloat delayTime = [self frameDurationAtIndex:i source:source];
         duration += delayTime;
-        
     }
     
     CFRelease(source);
     UIImage * animatedImage = [UIImage animatedImageWithImages:images duration:duration];
     return animatedImage;
+}
+
++ (float)frameDurationAtIndex:(NSUInteger)index source:(CGImageSourceRef)source
+{
+    float frameDuration = 0.1f;
+    CFDictionaryRef cfFrameProperties = CGImageSourceCopyPropertiesAtIndex(source,index,nil);
+    NSDictionary *frameProperties = (__bridge NSDictionary*)cfFrameProperties;
+    NSDictionary *gifProperties = frameProperties[(NSString*)kCGImagePropertyGIFDictionary];
+
+    NSNumber *delayTimeUnclampedProp = gifProperties[(NSString*)kCGImagePropertyGIFUnclampedDelayTime];
+    if(delayTimeUnclampedProp) {
+        frameDuration = [delayTimeUnclampedProp floatValue];
+    } else {
+
+        NSNumber *delayTimeProp = gifProperties[(NSString*)kCGImagePropertyGIFDelayTime];
+        if(delayTimeProp) {
+            frameDuration = [delayTimeProp floatValue];
+        }
+    }
+    
+    // Many annoying ads specify a 0 duration to make an image flash as quickly as possible.
+    // We follow Firefox's behavior and use a duration of 100 ms for any frames that specify
+    // a duration of <= 10 ms. See <rdar://problem/7689300> and <http://webkit.org/b/36082>
+    // for more information.
+
+    if (frameDuration < 0.011f)
+        frameDuration = 0.100f;
+
+    CFRelease(cfFrameProperties);
+    return frameDuration;
 }
 
 
