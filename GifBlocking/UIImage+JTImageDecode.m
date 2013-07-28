@@ -4,36 +4,65 @@
 
 @implementation UIImage (JTImageDecode)
 
-+ (UIImage *)decodedImageWithImage:(UIImage *)image {
-    CGImageRef imageRef = image.CGImage;
-    // System only supports RGB, set explicitly and prevent context error
-    // if the downloaded image is not the supported format
+typedef struct {
+    size_t bitsPerComponent;
+    size_t bytesPerPixel;
+    size_t bytesPerRow;
+    size_t dataSize;
+    CGFloat width;
+    CGRect rect;
+    CGFloat height;
+    CGContextRef context;
+    unsigned char *data;
+} UIImageGIFDecodeProperties;
+
+static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
+    .data = NULL
+};
+
++ (UIImageGIFDecodeProperties) createUIImageGIFDecodePropertiesWithRect:(CGRect)rect
+{
+    UIImageGIFDecodeProperties props;
+    props.width = CGRectGetWidth(rect);
+    props.height = CGRectGetHeight(rect);
+    props.rect = rect;
+    props.bitsPerComponent = 8;
+    props.bytesPerPixel    = 4;
+    props.bytesPerRow      = (props.width * props.bitsPerComponent * props.bytesPerPixel + 7) / 8;
+    props.dataSize         = props.bytesPerRow * props.height;
+    props.data = malloc(props.dataSize);
+    
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    
-    CGContextRef context = CGBitmapContextCreate(NULL,
-                                                 CGImageGetWidth(imageRef),
-                                                 CGImageGetHeight(imageRef),
-                                                 8,
-                                                 // width * 4 will be enough because are in ARGB format, don't read from the image
-                                                 CGImageGetWidth(imageRef) * 4,
-                                                 colorSpace,
-                                                 // kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little
-                                                 // makes system don't need to do extra conversion when displayed.
-                                                 kCGImageAlphaPremultipliedFirst | kCGBitmapByteOrder32Little);
+    props.context = CGBitmapContextCreate(props.data, props.width, props.height,
+                                          props.bitsPerComponent, props.bytesPerRow, colorSpace,
+                                          kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
     CGColorSpaceRelease(colorSpace);
-    
-    if ( ! context) {
-        return nil;
-    }
-    
-    CGRect rect = (CGRect){CGPointZero, CGImageGetWidth(imageRef), CGImageGetHeight(imageRef)};
-    CGContextDrawImage(context, rect, imageRef);
-    CGImageRef decompressedImageRef = CGBitmapContextCreateImage(context);
-    CGContextRelease(context);
-    
-    UIImage *decompressedImage = [[UIImage alloc] initWithCGImage:decompressedImageRef];
-    CGImageRelease(decompressedImageRef);
-    return decompressedImage;
+    return props;
+}
+
++ (void) releaseIImageGIFDecodeProperties:(UIImageGIFDecodeProperties)props
+{
+    free(props.data);
+}
+
++ (UIImage*) makeImageFromCGImageRef:(CGImageRef)cgImageRef
+                          properties:(UIImageGIFDecodeProperties)properties
+{
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    memset(properties.data, 0, properties.dataSize);
+    CGColorSpaceRelease(colorSpace);
+    CGContextDrawImage(properties.context, properties.rect, cgImageRef);
+    CGImageRef imageRef = CGBitmapContextCreateImage(properties.context);
+    UIImage *result = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return result;
+}
+
++ (UIImage *)decodedImageWithImage:(UIImage *)image
+{
+    UIImageGIFDecodeProperties decodeProperties = [self createUIImageGIFDecodePropertiesWithRect:(CGRect){.origin=CGPointZero,.size=image.size}];
+    return [self makeImageFromCGImageRef:image.CGImage properties:decodeProperties];
+    [self releaseIImageGIFDecodeProperties:decodeProperties];
 }
 
 + (UIImage *)animatedGIFImageWithData:(NSData *)data
@@ -42,20 +71,30 @@
     size_t count = CGImageSourceGetCount(source);
     NSMutableArray *images = [NSMutableArray arrayWithCapacity:count];
     CGFloat duration = 0.;
-    for (size_t i = 0; i < count; ++i) {
+    UIImageGIFDecodeProperties gifDecodeProperties = UIImageGIFDecodePropertiesNone;
+    NSDictionary* cgImageProperties = @{(id)kCGImageSourceShouldCache : @(YES)};
 
-        CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, i, NULL);
-        UIImage *uiImage = [UIImage imageWithCGImage:cgImage];
+    //Assumption every image is the same size, allocate re-usable data
+    if (count>0) {
+        CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CGRect imageDrawRect = (CGRect){CGPointZero, CGImageGetWidth(cgImage), CGImageGetHeight(cgImage)};
+        gifDecodeProperties = [self createUIImageGIFDecodePropertiesWithRect:imageDrawRect];
+    }
+    
+    for (size_t i = 0; i < count; ++i) {
+        CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, i, (__bridge CFDictionaryRef)cgImageProperties);
+        UIImage *uiImage = [self makeImageFromCGImageRef:cgImage properties:gifDecodeProperties];
         CGImageRelease(cgImage);
         
-        //NB: If the gif contains compression force the decompress here, it blocks the main thread otherwise
-        uiImage = [self decodedImageWithImage:uiImage];
-        [images addObject:uiImage];
+        if (uiImage) {
+            [images addObject:uiImage];
+        }
         
         CGFloat delayTime = [self frameDurationAtIndex:i source:source];
         duration += delayTime;
     }
     
+    [self releaseIImageGIFDecodeProperties:gifDecodeProperties];
     CFRelease(source);
     UIImage * animatedImage = [UIImage animatedImageWithImages:images duration:duration];
     return animatedImage;

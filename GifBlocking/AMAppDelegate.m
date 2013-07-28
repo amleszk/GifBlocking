@@ -4,6 +4,7 @@
 
 @interface AMAppDelegate ()
 @property (strong, nonatomic) UIImageView *imageView;
+@property (strong, nonatomic) UIWebView *webView;
 @property (strong, nonatomic) UIActivityIndicatorView *activity;
 @end
 
@@ -39,6 +40,10 @@
     [self.window addSubview:_activity];
     [_activity startAnimating];
 
+//    _webView = [[UIWebView alloc] initWithFrame:self.window.bounds];
+//    NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"rXYyQTo" ofType:@"gif"]];
+//    [_webView loadData:gifData MIMEType:@"image/gif" textEncodingName:@"utf-8" baseURL:nil];
+//    [self.window addSubview:_webView];
     
     dispatch_queue_t dataProcessQueue = dispatch_queue_create("data process queue", NULL);
     dispatch_async(dataProcessQueue, ^{
@@ -65,7 +70,6 @@
 -(void) decodeAndDisplayGif {
     [self decodeGif];
     [self displayGif];
-    
 }
 
 -(void) decodeGif {
