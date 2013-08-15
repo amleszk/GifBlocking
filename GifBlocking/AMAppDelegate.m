@@ -1,11 +1,17 @@
 
 #import "AMAppDelegate.h"
-#import "UIImage+JTImageDecode.h"
+//#import "UIImage+JTImageDecode.h"
+#import "AMGIFImageViewController.h"
 
 @interface AMAppDelegate ()
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIWebView *webView;
 @property (strong, nonatomic) UIActivityIndicatorView *activity;
+@property AMGIFImageViewController *gifImageViewController;
+@end
+
+
+@interface AMDemoVC : UIViewController
 @end
 
 @implementation AMAppDelegate
@@ -13,106 +19,48 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = [[AMDemoVC alloc] initWithNibName:nil bundle:nil];
     [self.window makeKeyAndVisible];
-    
-    NSTimer *timer =
-    [NSTimer timerWithTimeInterval:0.2
-                            target:self
-                          selector:@selector(updateTimerFireMethod:)
-                          userInfo:nil
-                           repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    
-
-    //does not block main thread, but does UI work on separate thread
-    //[NSThread detachNewThreadSelector:@selector(decodeAndDisplayGif) toTarget:self withObject:nil];
-    
-    //blocks main thread, UI work on main thread
-    //[self performSelector:@selector(decodeAndDisplayGif) withObject:nil afterDelay:1.];
-    
-    //does not block main thread but again ui work should be on main thread
-    
-    self.window.backgroundColor = [UIColor darkGrayColor];
-    _activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _activity.center = CGPointMake(floorf(self.window.bounds.size.width/2), floorf(self.window.bounds.size.height/2));
-    [self.window addSubview:_activity];
-    [_activity startAnimating];
-
-//    _webView = [[UIWebView alloc] initWithFrame:self.window.bounds];
-//    NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"rXYyQTo" ofType:@"gif"]];
-//    [_webView loadData:gifData MIMEType:@"image/gif" textEncodingName:@"utf-8" baseURL:nil];
-//    [self.window addSubview:_webView];
-    
-    dispatch_queue_t dataProcessQueue = dispatch_queue_create("data process queue", NULL);
-    dispatch_async(dataProcessQueue, ^{
-        NSLog(@"-----------Started decode ----------");
-        [self decodeGif];
-        NSLog(@"-----------Ended decode ----------");
-        dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"-----------Started display ----------");
-            [self displayGif];
-            [_activity stopAnimating];
-            NSLog(@"-----------Ended display ----------");
-        });
-        
-    });
-    
-    
     return YES;
 }
 
--(void) updateTimerFireMethod:(NSTimer*)timer{
-    NSLog(@".");
-}
 
--(void) decodeAndDisplayGif {
-    [self decodeGif];
-    [self displayGif];
-}
-
--(void) decodeGif {
-    NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"rXYyQTo" ofType:@"gif"]];
-    UIImage *gifImage = [UIImage animatedGIFImageWithData:gifData];
-    _imageView = [[UIImageView alloc] initWithImage:gifImage];
-}
+@end
 
 
--(void) displayGif {
-    [self.window addSubview:_imageView];
-}
-
-- (void)applicationDidReceiveMemoryWarning:(UIApplication *)application
+@implementation AMDemoVC
 {
-    NSLog(@"applicationDidReceiveMemoryWarning");
+    NSMutableArray *_gifViewControllers;
+}
+-(void) viewDidLoad
+{
+    _gifViewControllers = [NSMutableArray arrayWithCapacity:10];
+    NSArray *gifs = @[@"rXYyQTo",@"514c09947cfe5",@"16-cell",@"GeraniumFlowerUnfurl2",@"mbImw",@"tX9cjUO"];
+    for (NSString *gif in gifs) {
+        NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:gif ofType:@"gif"]];
+        AMGIFImageViewController *vc = [[AMGIFImageViewController alloc] initWithData:gifData];
+        [self.view addSubview:vc.view];
+        [_gifViewControllers addObject:vc];
+    }
 }
 
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
+-(void) viewDidLayoutSubviews
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    CGRect bounds = self.view.bounds;
+    CGSize boundsEachSize = bounds.size;
+    boundsEachSize.width/=3;
+    boundsEachSize.height/=3;
+    
+    CGFloat originX=0,originY=0;
+    for (UIViewController *vc in _gifViewControllers){
+        vc.view.frame = (CGRect){.origin={originX, originY},.size=boundsEachSize};
+        originX += boundsEachSize.width;
+        if (originX==bounds.size.width) {
+            originX = 0, originY += boundsEachSize.height;
+        }
+    }
 }
 
 @end
+

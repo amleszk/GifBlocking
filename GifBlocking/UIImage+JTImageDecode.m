@@ -27,15 +27,15 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
     props.height = CGRectGetHeight(rect);
     props.rect = rect;
     props.bitsPerComponent = 8;
-    props.bytesPerPixel    = 4;
-    props.bytesPerRow      = (props.width * props.bitsPerComponent * props.bytesPerPixel + 7) / 8;
+    props.bytesPerPixel    = (props.bitsPerComponent * 4 + 7)/8;
+    props.bytesPerRow      = props.width * props.bytesPerPixel;
     props.dataSize         = props.bytesPerRow * props.height;
     props.data = malloc(props.dataSize);
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     props.context = CGBitmapContextCreate(props.data, props.width, props.height,
                                           props.bitsPerComponent, props.bytesPerRow, colorSpace,
-                                          kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+                                          kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
     CGColorSpaceRelease(colorSpace);
     return props;
 }
@@ -48,14 +48,12 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
 + (UIImage*) makeImageFromCGImageRef:(CGImageRef)cgImageRef
                           properties:(UIImageGIFDecodeProperties)properties
 {
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     memset(properties.data, 0, properties.dataSize);
-    CGColorSpaceRelease(colorSpace);
     CGContextDrawImage(properties.context, properties.rect, cgImageRef);
     CGImageRef imageRef = CGBitmapContextCreateImage(properties.context);
-    UIImage *result = [UIImage imageWithCGImage:imageRef];
+    UIImage *resultImage = [UIImage imageWithCGImage:imageRef];
     CGImageRelease(imageRef);
-    return result;
+    return resultImage;
 }
 
 + (UIImage *)decodedImageWithImage:(UIImage *)image
@@ -79,19 +77,21 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
         CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, 0, NULL);
         CGRect imageDrawRect = (CGRect){CGPointZero, CGImageGetWidth(cgImage), CGImageGetHeight(cgImage)};
         gifDecodeProperties = [self createUIImageGIFDecodePropertiesWithRect:imageDrawRect];
+        CGFloat delayTime = [self frameDurationAtIndex:0 source:source];
+        duration = delayTime*count;
     }
     
     for (size_t i = 0; i < count; ++i) {
         CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, i, (__bridge CFDictionaryRef)cgImageProperties);
+        
+        //UIImage *uiImage = [UIImage imageWithCGImage:cgImage];
         UIImage *uiImage = [self makeImageFromCGImageRef:cgImage properties:gifDecodeProperties];
         CGImageRelease(cgImage);
         
+        NSLog(@"frame %d of %d",(int)i,(int)count);
         if (uiImage) {
             [images addObject:uiImage];
         }
-        
-        CGFloat delayTime = [self frameDurationAtIndex:i source:source];
-        duration += delayTime;
     }
     
     [self releaseIImageGIFDecodeProperties:gifDecodeProperties];
