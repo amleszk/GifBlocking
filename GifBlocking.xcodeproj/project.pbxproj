@@ -109,8 +109,6 @@
 			isa = PBXGroup;
 			children = (
 				61FBAFCF17A58C7500C70F7A /* gifs */,
-				61A690FF16FFB4520083CE5D /* UIImage+JTImageDecode.h */,
-				61A6910016FFB4520083CE5D /* UIImage+JTImageDecode.m */,
 				61364BBE16FF3241002374FC /* AMAppDelegate.h */,
 				61364BBF16FF3241002374FC /* AMAppDelegate.m */,
 				61364BB616FF3241002374FC /* Supporting Files */,
@@ -118,6 +116,8 @@
 				61CCC89E17B2523D00D7E68A /* AMGIFImageViewController.m */,
 				61AAD4CA17BB7A0400A61F83 /* AMBufferingController.h */,
 				61AAD4CB17BB7A0400A61F83 /* AMBufferingController.m */,
+				61A690FF16FFB4520083CE5D /* UIImage+JTImageDecode.h */,
+				61A6910016FFB4520083CE5D /* UIImage+JTImageDecode.m */,
 			);
 			path = GifBlocking;
 			sourceTree = "<group>";

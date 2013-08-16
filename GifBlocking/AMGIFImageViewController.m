@@ -71,16 +71,10 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
 
 -(void) didReceiveMemoryWarning
 {
-    [_bufferingController stopBuffering];
+    [_bufferingController didReceiveMemoryWarning];
 }
 
 #pragma mark Animation
-
--(void) restartAnimation
-{
-    _currentImageIndex = 0;
-    [self startAnimation];
-}
 
 -(void) startAnimation
 {
@@ -111,12 +105,9 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
 {
     if (![self isViewLoaded]) return;
     
-    UIImage *imageFrame = [_bufferingController popCachedObjectAtIndex:_currentImageIndex];
+    UIImage *imageFrame = [_bufferingController popCachedObject];
     if (imageFrame) {
         self.view.image = imageFrame;
-        _currentImageIndex = (_currentImageIndex + 1) % _totalImageCount;
-    } else {
-        [_bufferingController startBufferingFromIndex:_currentImageIndex];
     }
 }
 
@@ -133,9 +124,6 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
     UIImage *uiImage = [self makeImageFromCGImageRef:cgImage properties:_gifDecodeProperties];
     //[self cacheFrameAtIndex:_bufferedImageIndex withImage:uiImage];
     CGImageRelease(cgImage);
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.view setPercentBuffered:((float)_bufferingController.bufferedObjectCount/(float)_totalImageCount)];
-    });
     return uiImage;
 }
 
@@ -161,6 +149,13 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
 -(NSTimeInterval) animationDuration
 {
     return _duration;
+}
+
+-(NSTimeInterval) didBufferWithPercentComplete:(float)percentComplete
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.view setPercentBuffered:percentComplete];
+    });
 }
 
 #pragma mark - Helpers
@@ -246,9 +241,9 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
     if (self = [super initWithFrame:frame]) {
         _loadingLabel = [[UILabel alloc] initWithFrame:frame];
         _loadingLabel.text = @"Buffering...";
-        _loadingLabel.backgroundColor = [UIColor clearColor];
         _loadingLabel.font = [UIFont boldSystemFontOfSize:20];
-        _loadingLabel.backgroundColor = [UIColor lightGrayColor];
+        _loadingLabel.backgroundColor = [UIColor colorWithWhite:0. alpha:0.5];
+        _loadingLabel.textColor = [UIColor colorWithWhite:0.8 alpha:1.];
         _loadingLabel.textAlignment = NSTextAlignmentCenter;
         [_loadingLabel sizeToFit];
         [self setAnimating:animating];
@@ -266,7 +261,7 @@ static UIImageGIFDecodeProperties UIImageGIFDecodePropertiesNone = {
 
 -(void) setPercentBuffered:(float)percent
 {
-    self.loadingLabel.text = [NSString stringWithFormat:@"Buffering: %.0f%%",percent*100];
+    self.loadingLabel.text = [NSString stringWithFormat:@"Buffering: %.1f%%",percent*100];
     [_loadingLabel sizeToFit];
     [self layoutSubviews];
 }

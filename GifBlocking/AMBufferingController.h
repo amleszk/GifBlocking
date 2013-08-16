@@ -11,16 +11,18 @@ typedef enum {
 -(void) animationStateChange:(AMBufferingControllerAnimationState)state;
 -(NSUInteger) countOfObjectsToBuffer;
 -(NSTimeInterval) animationDuration;
+-(NSTimeInterval) didBufferWithPercentComplete:(float)percentComplete;
 @end
 
 
 @interface AMBufferingController : NSObject
 
 -(id) initWithDelegate:(id<AMBufferingControllerDelegate>)delegate;
--(id) popCachedObjectAtIndex:(NSUInteger)index;
+-(id) popCachedObject;
 -(void) startBufferingFromIndex:(NSUInteger)index;
--(void) stopBuffering;
+-(void) didReceiveMemoryWarning;
 @property NSUInteger maxBufferCount;
 
 @property (readonly) NSUInteger bufferedObjectCount;
+@property (readonly) NSUInteger currentImageIndex;
 @end

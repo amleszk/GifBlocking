@@ -8,10 +8,8 @@
 @interface AMGIFImageViewController : UIViewController
 
 -(id) initWithData:(NSData*)data;
--(void) restartAnimation;
 
 @property (nonatomic) AMGIFImageView* view;
-@property NSUInteger currentImageIndex;
 @property NSUInteger totalImageCount;
 @property CGFloat delayTime;
 @property CGFloat duration;

@@ -35,7 +35,9 @@
 -(void) viewDidLoad
 {
     _gifViewControllers = [NSMutableArray arrayWithCapacity:10];
-    NSArray *gifs = @[@"rXYyQTo",@"514c09947cfe5",@"16-cell",@"GeraniumFlowerUnfurl2",@"mbImw",@"tX9cjUO"];
+    //NSArray *gifs = @[@"rXYyQTo",@"514c09947cfe5",@"16-cell",@"GeraniumFlowerUnfurl2",@"mbImw",@"tX9cjUO"];
+    NSArray *gifs = @[@"mbImw"];
+    
     for (NSString *gif in gifs) {
         NSData *gifData = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:gif ofType:@"gif"]];
         AMGIFImageViewController *vc = [[AMGIFImageViewController alloc] initWithData:gifData];
